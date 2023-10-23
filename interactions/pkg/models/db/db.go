@@ -81,6 +81,10 @@ func (m *InteractionsModel) GetTopContents(param, limit string) ([]models.Intera
 		lmt = 10
 	}
 
+	if param != "reads" && param != "likes" {
+		return contents, errors.New("invalid parameter. supported parameters are reads and likes")
+	}
+
 	opts := options.Find()
 	opts.SetSort(bson.M{param: -1})
 	opts.SetLimit(int64(lmt))
