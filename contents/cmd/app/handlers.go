@@ -310,6 +310,15 @@ func (app *Application) GetTopContents(c *gin.Context) {
 		return
 	}
 
+	if param != "reads" && param != "likes" {
+		c.JSON(400, gin.H{
+			"status":  "failed",
+			"message": "invalid param. supported values (likes/reads)",
+		})
+
+		return
+	}
+
 	limit := c.Query("limit")
 
 	var tc models.TopContents
