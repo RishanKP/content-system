@@ -51,7 +51,7 @@ Once deployed successfully, all services will be available. example:
 |---------|-------------|
 | [Traefik Proxy Dashboard](http://localhost:8080/dashboard/#/) | Allows you to identify Traefik componentes like routers, provider, services, middlewares among others |
 | [List users api](http://localhost:9000/users/) | List all users |
-| [List movies api](http://localhost:9000/contents/) | List all movies |
+| [List contents api](http://localhost:9000/contents/) | List all stories |
 
 The following command is an example of how to list the users:
 
