@@ -1,0 +1,195 @@
+basePath: /users
+definitions:
+  models.CreateUserInput:
+    properties:
+      email:
+        type: string
+      lastName:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  models.CreateUserResponse:
+    properties:
+      id:
+        example: qrewje8234234rwmdsf
+        type: string
+      message:
+        example: user action completed
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  models.GetAllUsersResponse:
+    properties:
+      message:
+        example: users fetched
+        type: string
+      status:
+        example: success
+        type: string
+      users:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+    type: object
+  models.GetUserResponse:
+    properties:
+      message:
+        example: user data fetched
+        type: string
+      status:
+        example: success
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  models.InternalServerErrorResponse:
+    properties:
+      error:
+        example: user action failed
+        type: string
+      status:
+        example: failed
+        type: string
+    type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      lastName:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+host: localhost:9000
+info:
+  contact: {}
+  description: API for user CRUD operations
+  title: Users Microservice
+  version: 1.0.0
+paths:
+  /:
+    get:
+      description: endpoint to list all users of the system
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetAllUsersResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: List all users
+      tags:
+      - endpoints
+    post:
+      description: endpoint to create new user
+      parameters:
+      - description: create
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateUserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Create User
+      tags:
+      - endpoints
+  /{id}:
+    delete:
+      description: endpoint to delet user
+      parameters:
+      - description: id of user
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateUserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Delete User
+      tags:
+      - endpoints
+    get:
+      description: endpoint to get user details by Id
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetUserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Get User
+      tags:
+      - endpoints
+    put:
+      description: endpoint to update user details
+      parameters:
+      - description: update user input
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateUserInput'
+      - description: id of user
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateUserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Update User
+      tags:
+      - endpoints
+swagger: "2.0"

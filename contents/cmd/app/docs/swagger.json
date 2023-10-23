@@ -1,0 +1,407 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for managing contents",
+        "title": "Content Microservice",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "host": "localhost:9000",
+    "basePath": "/contents",
+    "paths": {
+        "/": {
+            "get": {
+                "description": "endpoint to list all Contents available",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "List all Contents",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetAllContentsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "endpoint to insert new content",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "Insert Content",
+                "parameters": [
+                    {
+                        "description": "create",
+                        "name": "content",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertContentInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertContentResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/new": {
+            "get": {
+                "description": "endpoint to list contents sorted by published date",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "List latest Contents",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetAllContentsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/topcontents": {
+            "get": {
+                "description": "endpoint to list top contents (most viewed,most liked)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "List top Contents",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetTopContentsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/uploadByCSV": {
+            "post": {
+                "description": "endpoint to bulk upload contents by csv",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "Insert Content By CSV",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "csv file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertContentResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/{id}": {
+            "get": {
+                "description": "endpoint to get particular content by Id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "Get Content By Id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "content id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetContentResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "endpoint to update a particular content",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "Update Content",
+                "parameters": [
+                    {
+                        "description": "update",
+                        "name": "content",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertContentInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertContentResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "endpoint to delete content by Id",
+                "produces": [
+                    "application/json",
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "Delete Content",
+                "parameters": [
+                    {
+                        "description": "id of content",
+                        "name": "id",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertContentResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Content": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "publishedOn": {
+                    "type": "string"
+                },
+                "story": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedOn": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.GetAllContentsResponse": {
+            "type": "object",
+            "properties": {
+                "contents": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Content"
+                    }
+                },
+                "message": {
+                    "type": "string",
+                    "example": "contents fetched"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "models.GetContentResponse": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "$ref": "#/definitions/models.Content"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "content fetched"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "models.GetTopContents": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "$ref": "#/definitions/models.Content"
+                },
+                "likes": {
+                    "type": "integer"
+                },
+                "reads": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.GetTopContentsResponse": {
+            "type": "object",
+            "properties": {
+                "contents": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.GetTopContents"
+                    }
+                },
+                "message": {
+                    "type": "string",
+                    "example": "contents fetched"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "models.InsertContentInput": {
+            "type": "object",
+            "properties": {
+                "story": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InsertContentResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "qrewje8234234rwmdsf"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "content action failed"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "models.InternalServerErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "content action failed"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "failed"
+                }
+            }
+        }
+    }
+}

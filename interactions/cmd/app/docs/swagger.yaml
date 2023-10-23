@@ -1,0 +1,152 @@
+basePath: /interactions
+definitions:
+  models.GetInteractionsByStoryID:
+    properties:
+      interactions:
+        $ref: '#/definitions/models.Interactions'
+      message:
+        example: interactions fetched
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  models.GetTopInteractionsResponse:
+    properties:
+      contents:
+        items:
+          $ref: '#/definitions/models.Interactions'
+        type: array
+      message:
+        example: ' action completed'
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  models.InteractionResponse:
+    properties:
+      message:
+        example: ' action completed'
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  models.Interactions:
+    properties:
+      id:
+        type: string
+      likedBy:
+        items:
+          type: string
+        type: array
+      likes:
+        type: integer
+      readBy:
+        items:
+          type: string
+        type: array
+      reads:
+        type: integer
+      storyID:
+        type: string
+    type: object
+  models.InteractionsInput:
+    properties:
+      storyID:
+        type: string
+      type:
+        type: string
+      userID:
+        type: string
+    type: object
+  models.InternalServerErrorResponse:
+    properties:
+      error:
+        example: action failed
+        type: string
+      status:
+        example: failed
+        type: string
+    type: object
+host: localhost:9000
+info:
+  contact: {}
+  description: API for interactions (read/write)
+  title: Interactions Microservice
+  version: 1.0.0
+paths:
+  /:
+    post:
+      description: endpoint to create a new interaction entry
+      parameters:
+      - description: update user input
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.InteractionsInput'
+      - description: action type (add/remove); if empty, add by default
+        in: query
+        name: action
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.InteractionResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Save User Interaction
+      tags:
+      - endpoints
+  /{id}:
+    get:
+      description: endpoint to get interactions for a partiular story by Id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetInteractionsByStoryID'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Get Interactions
+      tags:
+      - endpoints
+  /analytics/top:
+    get:
+      description: endpoint to get most viewed/ most liked contents
+      parameters:
+      - description: number of records to be returned
+        in: query
+        name: limit
+        type: string
+      - description: reads or likes for most viewed or most liked items respectively
+        in: query
+        name: param
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetTopInteractionsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Get Top Contents
+      tags:
+      - endpoints
+swagger: "2.0"

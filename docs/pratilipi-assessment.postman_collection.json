@@ -1,0 +1,520 @@
+{
+	"info": {
+		"_postman_id": "49f64c85-d34b-46a0-96f1-946e40f651e8",
+		"name": "pratilipi-assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11201011"
+	},
+	"item": [
+		{
+			"name": "users service",
+			"item": [
+				{
+					"name": "create new user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Jane\",\n    \"lastName\": \"Doe\",\n    \"email\":\"jane@bar.com\",\n    \"phone\":\"8885556667\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "create new user"
+					},
+					"response": []
+				},
+				{
+					"name": "list all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "get all users"
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users/653586b3855e05c0a2b36996",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"653586b3855e05c0a2b36996"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Rishan\",\n    \"lastName\":\"KP\",\n    \"email\":\"rishan@test.com\",\n    \"phone\":\"9998887776\"\n}\n"
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/653586b3855e05c0a2b36996",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"653586b3855e05c0a2b36996"
+							]
+						},
+						"description": "update user details"
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users/65341c11b38e7aa449adf38e",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"65341c11b38e7aa449adf38e"
+							]
+						},
+						"description": "delete user data"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "contents service",
+			"item": [
+				{
+					"name": "insert new content",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"New Story\",\n    \"story\":\"Story description 1. beautiful story\",\n    \"userID\":\"653586b3855e05c0a2b36996\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/contents",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents"
+							]
+						},
+						"description": "insert content"
+					},
+					"response": []
+				},
+				{
+					"name": "get all stories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/contents",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/contents/65361c654c4de6c023877d4c",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents",
+								"65361c654c4de6c023877d4c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update story",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Updated Title\",\n    \"story\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/contents/65361c654c4de6c023877d4c",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents",
+								"65361c654c4de6c023877d4c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete story",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/contents/6536167a24f5a50519298d3c",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents",
+								"6536167a24f5a50519298d3c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get most viewed stories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/contents/top?param=reads&limit=3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents",
+								"top"
+							],
+							"query": [
+								{
+									"key": "param",
+									"value": "reads"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get most liked stories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/contents/top?param=likes&limit=3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents",
+								"top"
+							],
+							"query": [
+								{
+									"key": "param",
+									"value": "likes"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						},
+						"description": "get top liked items"
+					},
+					"response": []
+				},
+				{
+					"name": "latest stories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/contents/new",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents",
+								"new"
+							]
+						},
+						"description": "get stories sorted by published date"
+					},
+					"response": []
+				},
+				{
+					"name": "bulk upload using csv file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/rishan/contents.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/contents/uploadByCSV",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contents",
+								"uploadByCSV"
+							]
+						},
+						"description": "please follow the following line form in csv file:\n    title$#content$#userId\n\ndelimiter is set to $# as conventional separators like comma might be present in content"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "interactions services",
+			"item": [
+				{
+					"name": "save like interaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"storyID\":\"65361c664c4de6c023877d4d\",\n    \"userID\":\"65361ba3879e07fd5ea26aa5\",\n    \"type\":\"like\" //types allowed \"read\" or \"like\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/interactions",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"interactions"
+							]
+						},
+						"description": "api to save content interaction\ntypes allowed are \"read\" or \"like\""
+					},
+					"response": []
+				},
+				{
+					"name": "save read interaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"storyID\":\"65361c664c4de6c023877d4d\",\n    \"userID\":\"65361ba3879e07fd5ea26aa5\",\n    \"type\":\"read\" //types allowed \"read\" or \"like\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/interactions",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"interactions"
+							]
+						},
+						"description": "api to save content interaction\ntypes allowed are \"read\" or \"like\""
+					},
+					"response": []
+				},
+				{
+					"name": "remove an interaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"storyID\":\"65361c664c4de6c023877d4d\",\n    \"userID\":\"65361ba3879e07fd5ea26aa5\",\n    \"type\":\"like\" //types allowed \"read\" or \"like\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/interactions?action=remove",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"interactions"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "remove"
+								}
+							]
+						},
+						"description": "api to save content interaction\ntypes allowed are \"read\" or \"like\""
+					},
+					"response": []
+				},
+				{
+					"name": "get interactions by story id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/interactions/65361c664c4de6c023877d4d",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"interactions",
+								"65361c664c4de6c023877d4d"
+							]
+						},
+						"description": "get story interactions by id"
+					},
+					"response": []
+				},
+				{
+					"name": "get top liked items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/interactions/analytics/top?param=likes&limit=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"interactions",
+								"analytics",
+								"top"
+							],
+							"query": [
+								{
+									"key": "param",
+									"value": "likes"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						},
+						"description": "param -- (parameter to define search)\n    reads => most viewed\n    likes => most liked\n\nlimit -- number of documents to be returned "
+					},
+					"response": []
+				},
+				{
+					"name": "get top viewed items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/interactions/analytics/top?param=reads&limit=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"interactions",
+								"analytics",
+								"top"
+							],
+							"query": [
+								{
+									"key": "param",
+									"value": "reads"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						},
+						"description": "param -- (parameter to define search)\n    reads => most viewed\n    likes => most liked\n\nlimit -- number of documents to be returned "
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,229 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for interactions (read/write)",
+        "title": "Interactions Microservice",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "host": "localhost:9000",
+    "basePath": "/interactions",
+    "paths": {
+        "/": {
+            "post": {
+                "description": "endpoint to create a new interaction entry",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "Save User Interaction",
+                "parameters": [
+                    {
+                        "description": "update user input",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InteractionsInput"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "action type (add/remove); if empty, add by default",
+                        "name": "action",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.InteractionResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/analytics/top": {
+            "get": {
+                "description": "endpoint to get most viewed/ most liked contents",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "Get Top Contents",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "number of records to be returned",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "reads or likes for most viewed or most liked items respectively",
+                        "name": "param",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetTopInteractionsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/{id}": {
+            "get": {
+                "description": "endpoint to get interactions for a partiular story by Id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "endpoints"
+                ],
+                "summary": "Get Interactions",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetInteractionsByStoryID"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.GetInteractionsByStoryID": {
+            "type": "object",
+            "properties": {
+                "interactions": {
+                    "$ref": "#/definitions/models.Interactions"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "interactions fetched"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "models.GetTopInteractionsResponse": {
+            "type": "object",
+            "properties": {
+                "contents": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Interactions"
+                    }
+                },
+                "message": {
+                    "type": "string",
+                    "example": " action completed"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "models.InteractionResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": " action completed"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "models.Interactions": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "likedBy": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "likes": {
+                    "type": "integer"
+                },
+                "readBy": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "reads": {
+                    "type": "integer"
+                },
+                "storyID": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InteractionsInput": {
+            "type": "object",
+            "properties": {
+                "storyID": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InternalServerErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "action failed"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "failed"
+                }
+            }
+        }
+    }
+}

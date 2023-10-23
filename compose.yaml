@@ -1,0 +1,96 @@
+services:
+  proxy:
+    image: traefik:v2.4.2
+    command:
+      # - "--log.level=DEBUG"
+      - "--api=true"
+      - "--api.dashboard=true"
+      - "--api.insecure=true" # Don't do that in production
+      - "--providers.docker"
+      - "--entrypoints.web.address=:9000"
+      # add pilot token service
+      # - "--pilot.token=3d1bd97f-cb9d-4cde-8112-77ce2f5abc92"
+      # install plugin rewrite body
+      # - "--experimental.plugins.plugin-rewrite.modulename=github.com/traefik/plugin-rewritebody"
+      # - "--experimental.plugins.plugin-rewrite.version=v0.3.1"
+    labels: 
+      - "traefik.http.routers.traefik.rule=Host(`localhost`)"
+      # Create basics middlewares
+      # - "traefik.http.middlewares.my-auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"
+      # - "traefik.http.middlewares.my-compress.compress=true"
+      # - "traefik.http.middlewares.my-header.headers.customresponseheaders.X-Custom-Response-Header=cinema"
+      # Create middlewares for plugins
+      # - "traefik.http.middlewares.my-rewrite.plugin.plugin-rewrite.lastModified=true"
+      # - "traefik.http.middlewares.my-rewrite.plugin.plugin-rewrite.rewrites[0].regex=ID"
+      # - "traefik.http.middlewares.my-rewrite.plugin.plugin-rewrite.rewrites[0].replacement=MY-ID"
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+    ports:
+      - target: 9000
+        published: 9000
+        protocol: tcp
+        mode: host
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    networks:
+      - system-network
+
+  users:
+    build: ./users/
+    command:
+      - "-serverAddr"
+      - "0.0.0.0"
+    labels:
+      - "traefik.http.routers.users.rule=Host(`localhost`)"
+      - "traefik.http.routers.users.rule=PathPrefix(`/users`)"
+      - "traefik.http.services.users.loadbalancer.server.port=8000"
+    networks:
+      - system-network
+    environment:
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_CLUSTER: ${MONGO_CLUSTER}
+      MONGO_DATABASE: "users"  
+
+  contents:
+    build: ./contents/
+    command:
+      - "-serverAddr"
+      - "0.0.0.0"
+    labels:
+      - "traefik.http.routers.contents.rule=Host(`localhost`)"
+      - "traefik.http.routers.contents.rule=PathPrefix(`/contents`)"
+      - "traefik.http.services.contents.loadbalancer.server.port=8001"
+    networks:
+      - system-network
+    environment:
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_CLUSTER: ${MONGO_CLUSTER}
+      MONGO_DATABASE: "contents"
+  
+  interactions:
+    build: ./interactions/
+    command:
+      - "-serverAddr"
+      - "0.0.0.0"
+    labels:
+      - "traefik.http.routers.interactions.rule=Host(`localhost`)"
+      - "traefik.http.routers.interactions.rule=PathPrefix(`/interactions`)"
+      - "traefik.http.services.interactions.loadbalancer.server.port=8002"
+    networks:
+      - system-network
+    environment:
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_CLUSTER: ${MONGO_CLUSTER}
+      MONGO_DATABASE: "interactions"
+
+networks:
+  system-network:
+    driver: bridge

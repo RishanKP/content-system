@@ -1,0 +1,270 @@
+basePath: /contents
+definitions:
+  models.Content:
+    properties:
+      id:
+        type: string
+      publishedOn:
+        type: string
+      story:
+        type: string
+      title:
+        type: string
+      updatedOn:
+        type: string
+      userID:
+        type: string
+    type: object
+  models.GetAllContentsResponse:
+    properties:
+      contents:
+        items:
+          $ref: '#/definitions/models.Content'
+        type: array
+      message:
+        example: contents fetched
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  models.GetContentResponse:
+    properties:
+      content:
+        $ref: '#/definitions/models.Content'
+      message:
+        example: content fetched
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  models.GetTopContents:
+    properties:
+      content:
+        $ref: '#/definitions/models.Content'
+      likes:
+        type: integer
+      reads:
+        type: integer
+    type: object
+  models.GetTopContentsResponse:
+    properties:
+      contents:
+        items:
+          $ref: '#/definitions/models.GetTopContents'
+        type: array
+      message:
+        example: contents fetched
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  models.InsertContentInput:
+    properties:
+      story:
+        type: string
+      title:
+        type: string
+      userID:
+        type: string
+    type: object
+  models.InsertContentResponse:
+    properties:
+      id:
+        example: qrewje8234234rwmdsf
+        type: string
+      message:
+        example: content action failed
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  models.InternalServerErrorResponse:
+    properties:
+      error:
+        example: content action failed
+        type: string
+      status:
+        example: failed
+        type: string
+    type: object
+host: localhost:9000
+info:
+  contact: {}
+  description: API for managing contents
+  title: Content Microservice
+  version: 1.0.0
+paths:
+  /:
+    get:
+      description: endpoint to list all Contents available
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetAllContentsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: List all Contents
+      tags:
+      - endpoints
+    post:
+      description: endpoint to insert new content
+      parameters:
+      - description: create
+        in: body
+        name: content
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertContentInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.InsertContentResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Insert Content
+      tags:
+      - endpoints
+  /{id}:
+    delete:
+      description: endpoint to delete content by Id
+      parameters:
+      - description: id of content
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.InsertContentResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Delete Content
+      tags:
+      - endpoints
+    get:
+      description: endpoint to get particular content by Id
+      parameters:
+      - description: content id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetContentResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Get Content By Id
+      tags:
+      - endpoints
+    put:
+      description: endpoint to update a particular content
+      parameters:
+      - description: update
+        in: body
+        name: content
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertContentInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.InsertContentResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Update Content
+      tags:
+      - endpoints
+  /new:
+    get:
+      description: endpoint to list contents sorted by published date
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetAllContentsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: List latest Contents
+      tags:
+      - endpoints
+  /topcontents:
+    get:
+      description: endpoint to list top contents (most viewed,most liked)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetTopContentsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: List top Contents
+      tags:
+      - endpoints
+  /uploadByCSV:
+    post:
+      consumes:
+      - multipart/form-data
+      description: endpoint to bulk upload contents by csv
+      parameters:
+      - description: csv file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.InsertContentResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorResponse'
+      summary: Insert Content By CSV
+      tags:
+      - endpoints
+swagger: "2.0"
