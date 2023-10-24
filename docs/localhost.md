@@ -17,7 +17,8 @@ MONGO_CLUSTER={your mongodb atlas cluster}
 ## Requirements
 
 * Docker Engine  
-* Docker Compose 
+* Docker Compose
+* MongoDB Atlas Account
 
 ## Starting services
 
