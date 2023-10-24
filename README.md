@@ -5,8 +5,7 @@
  * User Service: allows basic CRUD operations like insert,update,delete User
  * Content Service: service to manage contents.
  * Interactions Service: service to manage interaction activities (read,like, get most viewed item,get most liked items).
- * Users Service: Provides movie suggestions for users by communicating with other services.
-
+   
 Container images used support multi-architectures (amd64, arm/v7 and arm64).
 
 ## Index
