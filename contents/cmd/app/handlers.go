@@ -37,6 +37,31 @@ func (app *Application) All(c *gin.Context) {
 	})
 }
 
+// ListContentsByUserId godoc
+// @Summary List all Contents
+// @Description endpoint to list all Contents by user id
+// @Tags endpoints
+// @Produce application/json
+// @Success 200 {object} models.GetAllContentsResponse{}
+// @Failure 500 {object} models.InternalServerErrorResponse{}
+// @Router /user/{id} [get]
+func (app *Application) GetContentsByUserId(c *gin.Context) {
+	contents, err := app.Contents.GetContentsByUserId(c.Param("id"))
+	if err != nil {
+		app.ServerError(c, err)
+
+		return
+	}
+
+	app.InfoLog.Println("contents fetched successfully")
+
+	c.JSON(200, gin.H{
+		"status":   "success",
+		"message":  "contents fetched",
+		"contents": contents,
+	})
+}
+
 // ListLatestContents godoc
 // @Summary List latest Contents
 // @Description endpoint to list contents sorted by published date

@@ -70,7 +70,7 @@ func (m *UserModel) Update(id string, user models.CreateUserInput) (*mongo.Updat
 	return m.Client.UpdateOne(context.TODO(), bson.M{"_id": _id}, bson.M{
 		"$set": bson.M{
 			"name":     user.Name,
-			"lastName": user.LastName,
+			"lastname": user.LastName,
 			"email":    user.Email,
 			"phone":    user.Phone,
 		},

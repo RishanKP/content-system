@@ -31,6 +31,22 @@ func (m *ContentModel) All() ([]models.Content, error) {
 	return contents, nil
 }
 
+func (m *ContentModel) GetContentsByUserId(id string) ([]models.Content, error) {
+	contents := []models.Content{}
+
+	cursor, err := m.Client.Find(context.TODO(), bson.M{"userID": id})
+	if err != nil {
+		return nil, err
+	}
+
+	err = cursor.All(context.TODO(), &contents)
+	if err != nil {
+		return nil, err
+	}
+
+	return contents, nil
+}
+
 func (m *ContentModel) Latest() ([]models.Content, error) {
 	contents := []models.Content{}
 

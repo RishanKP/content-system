@@ -15,6 +15,7 @@ func (app *Application) Routes() *gin.Engine {
 	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.GET("/", app.All)
 	router.GET("/:id", app.GetContentById)
+	router.GET("/user/:id", app.GetContentsByUserId)
 	router.POST("/", app.Create)
 	router.PUT("/:id", app.Update)
 	router.DELETE("/:id", app.Delete)

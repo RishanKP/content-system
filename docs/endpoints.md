@@ -19,6 +19,7 @@ Used to manage content actions.
 |---------|--------|----------------|
 | List stories | `GET` | `/contents/` |
 | Get story by Id | `GET` | `/contents/{id}` |
+| Get stories by User Id | `GET` | `/contents/user/{id}` |
 | Get latest stories | `GET` | `/contents/new` |
 | Insert story | `POST` | `/contents/` |
 | Update story | `PUT` | `/contents/{id}` |
